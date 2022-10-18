@@ -1,9 +1,7 @@
 import datetime
 import json
 import logging
-from browsermobproxy import Server, Client
 from selenium.webdriver import DesiredCapabilities
-from selenium.webdriver.support.events import AbstractEventListener, EventFiringWebDriver
 import allure
 import pytest
 import os
@@ -22,7 +20,7 @@ def pytest_addoption(parser):
 
     """Аргумент выбора браузера"""
     parser.addoption(
-        "--browser_select", "-B", default="firefox"
+        "--browser", "-B", default="firefox"
     )
 
     parser.addoption(
@@ -37,7 +35,7 @@ def pytest_addoption(parser):
 @pytest.fixture
 def browser(request):
     url = request.config.getoption("--url")
-    browser_select = request.config.getoption("--browser_select")
+    browser = request.config.getoption("--browser")
     executor = request.config.getoption("--executor")
     log_level = request.config.getoption("--log_level")
 
@@ -62,29 +60,10 @@ def browser(request):
         'performance': 'ALL',
     }
 
-    if browser_select == "firefox":
-        driver = webdriver.Firefox(
-            executable_path=f"{DRIVERS}/geckodriver",
-            desired_capabilities=caps
-        )
-
-    elif browser_select == "chrome":
-        driver = webdriver.Chrome(
-            executable_path=f"{DRIVERS}/chromedriver",
-            desired_capabilities=caps
-        )
-
-    elif browser_select == "opera":
-        driver = webdriver.Opera(
-            executable_path=f"{DRIVERS}/operadriver",
-            desired_capabilities=caps
-        )
-
-    else:
-        driver = webdriver.Remote(
-            command_executor="http://{}:4444/wd/hub".format(executor),
-            desired_capabilities={"browserName": browser}
-        )
+    driver = webdriver.Remote(
+        command_executor=f"http://{executor}:4444/wd/hub".format(executor),
+        desired_capabilities={"browserName": browser}
+    )
 
     allure.attach(
         name=driver.session_id,

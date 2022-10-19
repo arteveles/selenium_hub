@@ -31,6 +31,10 @@ def pytest_addoption(parser):
         "--log_level", action="store", default="DEBUG"
     )
 
+    parser.addoption(
+        "--remote", default="firefox"
+    )
+
 
 @pytest.fixture
 def browser(request):
@@ -38,6 +42,7 @@ def browser(request):
     browser = request.config.getoption("--browser")
     executor = request.config.getoption("--executor")
     log_level = request.config.getoption("--log_level")
+    remote = request.config.getoption("--remote")
 
     """Создается новый логгер, и берется имя теста который сейчас выполняеся.
     Чтоб на отдельный тест создавался отдельный лог."""
@@ -60,10 +65,29 @@ def browser(request):
         'performance': 'ALL',
     }
 
-    driver = webdriver.Remote(
-        command_executor=f"http://{executor}:4444/wd/hub".format(executor),
-        desired_capabilities={"browserName": browser}
-    )
+    if browser == "firefox":
+        driver = webdriver.Firefox(
+            executable_path=f"{DRIVERS}/geckodriver",
+            desired_capabilities=caps
+        )
+
+    elif browser == "chrome":
+        driver = webdriver.Chrome(
+            executable_path=f"{DRIVERS}/chromedriver",
+            desired_capabilities=caps
+        )
+
+    elif browser == "opera":
+        driver = webdriver.Opera(
+            executable_path=f"{DRIVERS}/operadriver",
+            desired_capabilities=caps
+        )
+
+    if remote:
+        driver = webdriver.Remote(
+            command_executor=f"http://{executor}:4444/wd/hub".format(executor),
+            desired_capabilities={"browserName": browser}
+        )
 
     allure.attach(
         name=driver.session_id,

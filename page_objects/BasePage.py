@@ -43,8 +43,8 @@ class BasePage:
     def click(self, element):
         with allure.step(f"Клик на элемент."):
             try:
-                self.logger.info("Clicking element: {}".format(element))
                 ActionChains(self.driver).move_to_element(element).pause(0.1).click().perform()
+                self.logger.info("Clicking element: {}".format(element))
             except e:
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
@@ -84,8 +84,9 @@ class BasePage:
     def element(self, locator: tuple):
         with allure.step(f"Поиск и ожидание элемента. XPATH = {locator}"):
             try:
-                self.logger.info(f"Find element: {locator}".format(locator))
                 return WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(locator))
+                self.logger.info(f"Find element: {locator}".format(locator))
+                # return self.wait.until(EC.visibility_of_element_located(locator))
             except TimeoutException:
                 raise AssertionError(f"Не дождался видимости элемента {locator}")
 
@@ -119,8 +120,8 @@ class BasePage:
     def open(self, url):
         with allure.step(f"Открываю странцу"):
             try:
-                self.logger.info("Opening url: {}".format(url))
                 self.driver.get(url)
+                self.logger.info("Opening url: {}".format(url))
             except e:
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),

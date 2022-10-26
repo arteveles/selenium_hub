@@ -1,3 +1,5 @@
+import time
+
 import allure
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
@@ -8,10 +10,10 @@ class AdminLoginPage(BasePage):
     INPUT_USERN = (By.XPATH, "//input[@name='username']")
     INPUT_PASS = (By.XPATH, "//input[@name='password']")
     LOG_BTN = (By.XPATH, "//button[@type='submit']")
-    LOGOUT_BTN = (By.XPATH, "//span[@class='hidden-xs hidden-sm hidden-md']")
+    LOGOUT_BTN = (By.XPATH, "//span[text()='Logout']")
     ALERT_TEXT = (By.XPATH, "//div[@class='alert alert-danger alert-dismissible']")
     path = "/admin"
-    url = "http://10.0.2.15:8081/"
+    url = "http://10.0.2.15:8081"
 
     def open(self):
         with allure.step(f"Прикрепил HTML. Перехожу на страницу {self.url + self.path}"):
@@ -63,14 +65,17 @@ class AdminLoginPage(BasePage):
     def logout(self):
         with allure.step(f"Клик на кнопку разлогиниться. XPATH = {self.LOGOUT_BTN}"):
             try:
-                self.logger.info(f"Click 'Logout' button:")
                 logout_btn = self.element(self.LOGOUT_BTN)
-                logout_btn.click()
-                self.browser_log()
+                time.sleep(2)
+                self.click(logout_btn)
+                self.logger.info(f"Click 'Logout' button:")
             except NoSuchElementException as e:
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
                     attachment_type=allure.attachment_type.PNG
                 )
+                self.browser_log()
                 raise AssertionError(e.msg)
+
+

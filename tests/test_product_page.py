@@ -7,7 +7,7 @@ from page_objects.ProductPage import ProductPage
 
 
 @allure.title(f"Проверка поиска товара.")
-def test_check_product_page(browser):
-    SearchElement(browser).search_product(*get_searched_item())
-    ProductCard(browser).open_product_card()
-    ProductPage(browser).verify_product_name()
+def test_check_product_page(driver):
+    SearchElement(driver).search_product(*get_searched_item())
+    ProductCard(driver).open_product_card()
+    ProductPage(driver).verify_product_name()

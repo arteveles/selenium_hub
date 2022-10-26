@@ -13,7 +13,21 @@ class CatalogPage(BasePage):
     PASSW_INP = (By.XPATH, "//input[@name='password']")
     PROD_NAME = (By.XPATH, "//div[@class='product-thumb']//h4/a")
     CATALOG_HEADER_TEXT = "Desktops"
+    url = "http://10.0.2.15:8081"
+    path = ""
 
+    def open(self):
+        with allure.step(f"Прикрепил HTML. Перехожу на страницу {self.url + self.path}"):
+            try:
+                self.logger.info(f"Open page {self.url + self.path}")
+                self.driver.get(self.url + self.path)
+            except e:
+                allure.attach(
+                    body=self.driver.get_screenshot_as_png(),
+                    name="screenshot_image",
+                    attachment_type=allure.attachment_type.PNG
+                )
+                raise AssertionError(e.msg)
     def verify_header_of_page(self):
         with allure.step(f"Элемент {self.CATALOG_HEADER} имеет заголовок {self.CATALOG_HEADER_TEXT}"):
             try:
@@ -21,8 +35,7 @@ class CatalogPage(BasePage):
                 assert desktop_header.text == self.CATALOG_HEADER_TEXT
             except e:
                 allure.attach(
-                    body=self.driver.get_screenshot_as_png(),
-                    name="screenshot_image",
+                    body=self.driver.save_screenshot('screen.png'),
                     attachment_type=allure.attachment_type.PNG
                 )
                 raise AssertionError(e.msg)
@@ -33,8 +46,7 @@ class CatalogPage(BasePage):
                 self.element(self.CATALOG_BTN_ADD_TO_FVT).click()
             except e:
                 allure.attach(
-                    body=self.driver.get_screenshot_as_png(),
-                    name="screenshot_image",
+                    body=self.driver.save_screenshot('screen.png'),
                     attachment_type=allure.attachment_type.PNG
                 )
                 raise AssertionError(e.msg)
@@ -49,8 +61,7 @@ class CatalogPage(BasePage):
                 return self
             except e:
                 allure.attach(
-                    body=self.driver.get_screenshot_as_png(),
-                    name="screenshot_image",
+                    body=self.driver.save_screenshot('screen.png'),
                     attachment_type=allure.attachment_type.PNG
                 )
                 raise AssertionError(e.msg)

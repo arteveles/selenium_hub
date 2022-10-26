@@ -1,7 +1,9 @@
 import allure
+from allure_commons.types import AttachmentType
 from selenium.webdriver.common.by import By
 from page_objects.BasePage import BasePage
 from selenium.common.exceptions import NoSuchElementException as e
+
 import re
 
 
@@ -29,7 +31,7 @@ class HomePage(BasePage):
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)
 
@@ -43,7 +45,7 @@ class HomePage(BasePage):
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)
 
@@ -56,7 +58,7 @@ class HomePage(BasePage):
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)
 
@@ -69,7 +71,7 @@ class HomePage(BasePage):
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)
 
@@ -85,7 +87,7 @@ class HomePage(BasePage):
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)
 
@@ -98,7 +100,7 @@ class HomePage(BasePage):
                 allure.attach(
                     body=self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)
 
@@ -109,8 +111,8 @@ class HomePage(BasePage):
                 assert count_menu_items == 8
             except e:
                 allure.attach(
-                    body=self.driver.get_screenshot_as_png(),
+                    self.driver.get_screenshot_as_png(),
                     name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
+                    attachment_type=AttachmentType.PNG
                 )
                 raise AssertionError(e.msg)

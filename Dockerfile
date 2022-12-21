@@ -18,10 +18,10 @@ RUN pip install -r requirenments.txt
 COPY . .
 
 # Предустановка команды pytest и отчет
-ENTRYPOINT ["pytest", "--alluredir", "allure-report"]
+#ENTRYPOINT ["pytest", "--alluredir", "allure-report"]
 
 # Этот параметр требуется переопределить при СОЗДАНИИ контейнера, т.е. run команде
-CMD ["pytest", "--browser", "firefox", "--executor", "localhost"]
+CMD ["--browser", "firefox", "--executor", "localhost"]
 
 # docker build -t tests .    -создаю докер образ
 # docker run -it tests:latest sh    -запускаю докер образ и смотрю что в нем хранится. sh вместо bash используется по тому что юзаю alpine

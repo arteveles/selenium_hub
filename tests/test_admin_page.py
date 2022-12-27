@@ -5,11 +5,10 @@ from page_objects.AdminPage import AdminPage
 from test_data.users import get_valid_user, get_invalid_user
 from test_data.product_values import product_name
 
-@allure.title("лидная регистрация")
+@allure.title("Валидная регистрация")
 @allure.testcase(f'https://pypi.org/project/allure-pytest/', 'Валидация авторизации.')
 def test_valid_registration(driver):
     alp = AdminLoginPage(driver)
-    alp.open()
     alp.authorization(*get_valid_user())
     alp.logout()
 
@@ -18,7 +17,6 @@ def test_valid_registration(driver):
 @allure.testcase('https://pypi.org/project/allure-pytest/', 'Test_case_name')
 def test_invalid_registration(driver):
     alp = AdminLoginPage(driver)
-    alp.open()
     alp.authorization(*get_invalid_user())
     alp.validate_no_authorization()
 
@@ -28,7 +26,6 @@ def test_invalid_registration(driver):
 def test_add_new_product(driver):
     ap = AdminPage(driver)
     alp = AdminLoginPage(driver)
-    alp.open()
     alp.authorization(*get_valid_user())
     ap.select_catalog_product_item()
     ap.add_new_product(*product_name())
@@ -41,7 +38,6 @@ def test_add_new_product(driver):
 def test_remove_new_product(driver):
     ap = AdminPage(driver)
     alp = AdminLoginPage(driver)
-    alp.open()
     alp.authorization(*get_valid_user())
     ap.select_catalog_product_item()
     ap.remove_product(*product_name())

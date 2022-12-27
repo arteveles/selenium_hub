@@ -12,22 +12,10 @@ class CatalogPage(BasePage):
     EMAIL_INP = (By.XPATH, "//input[@name='email']")
     PASSW_INP = (By.XPATH, "//input[@name='password']")
     PROD_NAME = (By.XPATH, "//div[@class='product-thumb']//h4/a")
+    MENU_DESKTOPS = (By.XPATH, "//a[text()='Desktops']")
+    MENU_DESKTOPS_SHOW_ALL = (By.XPATH, "//a[text()='Show All Desktops']")
     CATALOG_HEADER_TEXT = "Desktops"
-    url = "http://10.0.2.15:8081"
-    path = ""
 
-    def open(self):
-        with allure.step(f"Прикрепил HTML. Перехожу на страницу {self.url + self.path}"):
-            try:
-                self.logger.info(f"Open page {self.url + self.path}")
-                self.driver.get(self.url + self.path)
-            except e:
-                allure.attach(
-                    body=self.driver.get_screenshot_as_png(),
-                    name="screenshot_image",
-                    attachment_type=allure.attachment_type.PNG
-                )
-                raise AssertionError(e.msg)
     def verify_header_of_page(self):
         with allure.step(f"Элемент {self.CATALOG_HEADER} имеет заголовок {self.CATALOG_HEADER_TEXT}"):
             try:

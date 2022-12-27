@@ -12,7 +12,6 @@ import allure
 def test_visit_catalog_from_menu(driver):
     hp = HomePage(driver)
     cp = CatalogPage(driver)
-    cp.open()
     hp.select_all_desktops()
     cp.verify_header_of_page()
     time.sleep(15)

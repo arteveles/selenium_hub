@@ -69,7 +69,7 @@ def driver(request):
     logger.info("===> Test {} started at {}".format(request.node.name, datetime.datetime.now()))
 
     """Запуск тестов в selenoid"""
-    if executor == "localhost":
+    if executor != "localhost":
 
         capabilities = {
             "browserName": browser,
@@ -101,6 +101,7 @@ def driver(request):
 
     driver.logger = logger
     logger.info("Browser:{}".format(browser, driver.desired_capabilities))
+
     def finalizer():
         logger.info("===> Test {} passed at {}".format(request.node.name, datetime.datetime.now()))
         driver.quit()
@@ -109,7 +110,6 @@ def driver(request):
     driver.test_name = request.node.name
     driver.log_level = logging.DEBUG
     driver.maximize_window()
-
 
     request.addfinalizer(finalizer)
 

@@ -1,0 +1,13 @@
+.venv/
+venv/
+env/
+examples/
+README.md
+allure-report/
+allure-results/
+selenium.log
+gitignore
+.idea/
+.git
+.cache/
+logs/

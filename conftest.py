@@ -93,7 +93,9 @@ def driver(request):
             driver = webdriver.Chrome(executable_path="driver/chromedriver")
         elif browser == "firefox":
             # driver = webdriver.Firefox(executable_path=os.path.expanduser("~/Загрузки/driver/geckodriver"))
-            driver = webdriver.Firefox(executable_path="driver/geckodriver")
+            opts = webdriver.FirefoxOptions()
+            opts.add_argument("--headless")
+            driver = webdriver.Firefox(executable_path="driver/geckodriver", options=opts)
 
     # Attach browser data
     allure.attach(

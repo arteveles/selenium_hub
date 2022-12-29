@@ -89,9 +89,11 @@ def driver(request):
 
     else:
         if browser == "chrome":
-            driver = webdriver.Chrome(executable_path=os.path.expanduser("~/Загрузки/driver/chromedriver"))
+            # driver = webdriver.Chrome(executable_path=os.path.expanduser("~/Загрузки/driver/chromedriver")) на случай если потребуется удалить с гита дрова
+            driver = webdriver.Chrome(executable_path=os.path.expanduser("driver/chromedriver"))
         elif browser == "firefox":
-            driver = webdriver.Firefox(executable_path=os.path.expanduser("~/Загрузки/driver/geckodriver"))
+            # driver = webdriver.Firefox(executable_path=os.path.expanduser("~/Загрузки/driver/geckodriver"))
+            driver = webdriver.Firefox(executable_path=os.path.expanduser("driver/geckodriver"))
 
     # Attach browser data
     allure.attach(
